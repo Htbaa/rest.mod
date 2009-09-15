@@ -18,7 +18,7 @@ Type TRESTResponse
 		about:
 	End Rem
 	Method GetHeader:String(headerName:String)
-		If Not Self.headers.Contains(headerName) Then Throw New TRESTResponseException.SetMessage("Header " + headerName + " doesn't exist")
+		'If Not Self.headers.Contains(headerName) Then Throw New TRESTResponseException.SetMessage("Header " + headerName + " doesn't exist")
 		Return String(Self.headers.ValueForKey(headerName))
 	End Method
 	
