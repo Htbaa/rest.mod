@@ -93,7 +93,7 @@ Type TRESTRequest
 		
 		curl.httpHeader(headerArray)
 		
-		curl.setHeaderCallback(Self.HeaderCallback, Self)
+		curl.setHeaderCallback(Self.HeaderCallback, response)
 		
 		Local res:Int = curl.perform()
 
