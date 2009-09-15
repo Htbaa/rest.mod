@@ -17,7 +17,3 @@ Include "exceptions.bmx"
 Include "url.bmx"
 Include "response.bmx"
 Include "request.bmx"
-
-Incbin "cacert.pem"
-
-TRESTRequest.CAInfo = "incbin::cacert.pem"
