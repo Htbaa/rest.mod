@@ -2,6 +2,5 @@ This Module allows you To interact with any RESTful service.
 This module requires the following external modules:
 
 	* bah.libcurlssl
-	* bah.crypto (>=1.02)
 
-	(Both BaH modules can be found at http://code.google.com/p/maxmods/)
+	(BaH modules can be found at http://code.google.com/p/maxmods/)
