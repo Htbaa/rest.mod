@@ -15,11 +15,13 @@ Type TRESTResponse
 	
 	Rem
 		bbdoc: Retrieve header from response
+		returns: Value of header
 		about:
+		Retrieve a header by the name of @headerName<br>
+		When @throwOnError is @True a TRESTResponseException will be thrown when the header doesn't exist.
 	End Rem
-	Method GetHeader:String(headerName:String)
-		'If Not Self.headers.Contains(headerName) Then Throw New TRESTResponseException.SetMessage("Header " + headerName + " doesn't exist")
+	Method GetHeader:String(headerName:String, throwOnError:Byte = False)
+		If throwOnError And Not Self.headers.Contains(headerName) Then Throw New TRESTResponseException.SetMessage("Header " + headerName + " doesn't exist")
 		Return String(Self.headers.ValueForKey(headerName))
-	End Method
-	
+	End Method	
 End Type
