@@ -1,10 +1,19 @@
 <h1>REST</h1>
 <p>This module allows you to interact with a RESTful server.</p>
+<h2>Basic usage:</h2>
+<pre>
+SuperStrict
+Local request:TRESTRequest = New TRESTRequest
+request.AddHeader("X-API-Key", "KD93DJ03LW20")
 
-<!--
-<h2>Examples</h2>
-<p>Please take a look at one of the examples below.</p>
-<ul>
-	<li><a href="../examples/example1.bmx">example1.bmx</a></li>
-</ul>
--->
+Local headers:String[] = ["username: Htbaa"]
+Local response:TRESTResponse = request.Call("http://localhost/rest/account/new", headers, "PUT")
+Print "Returned HTTP Status code from REST server is: " + response.responseCode
+Print "Some header returned from REST server is: " + response.GetHeader("secret-message")
+</pre>
+
+<h2>Difference between AddHeader() and adding headers through Call()</h2>
+<p>Any header set with AddHeader() will be added to every request done by Call(). 
+Any headers added with Call() will only be used for that particular request. 
+So any headers set with AddHeader() are global for the TRESTRequest object, and those set with 
+Call() only effect the current request.</p>
