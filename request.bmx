@@ -6,6 +6,8 @@ Type TRESTRequest
 	Field _progressCallback:Int(data:Object, dltotal:Double, dlnow:Double, ultotal:Double, ulnow:Double)
 	Field _progressData:Object
 	
+	Field _headers:TMap = New TMap
+	
 	Rem
 		bbdoc: Optionally set the path to a certification bundle to validate the SSL certificate of Rackspace
 		about: If you want to validate the SSL certificate of the REST server you can set the path to your certificate bundle here.
@@ -39,8 +41,43 @@ Type TRESTRequest
 	End Function
 	
 	Rem
-		bbdoc: 
-		about: Used to send requests. Sets header data and content data. Returns HTTP status code
+		bbdoc: Add a header
+		about: Preset a header which will then be used when invoking Call()
+	End Rem
+	Method AddHeader(name:String, value:String)
+		Self._headers.Insert(name, value)
+	End Method
+	
+	Rem
+		bbdoc: Remove a single header
+		about: @name is the name of the header
+	End Rem
+	Method RemoveHeader(name:String)
+		Self._headers.Remove(name)
+	End Method
+	
+	Rem
+		bbdoc: Clear all headers
+		about: Clears all headers that have been set with AddHeader()
+	End Rem
+	Method RemoveHeaders()
+		Self._headers.Clear()
+	End Method
+	
+	Rem
+		bbdoc: Send request to REST server
+		returns: TRESTResponse object
+		about: Used to send requests. Sets header data and content data. Returns TRESTResponse object.<br>
+		Any headers set in @headers array won't be added to the objects headers TMap.<br>
+		This allows you to define a TRESTRequest object with a number of default/preset headers
+		and any additional can be added here. Do note that any headers set with AddHeader() will be
+		added to the request.<br>
+		<br>
+		If @userData is a TStream and @requestMethod has been set to PUT then libcurlssl will read
+		the TStream and push it's content to the REST server. After the request has been made the
+		TStream will be closed.<br>
+		<br>
+		If an error occurs with the request a TRESTRequestException will be thrown. 
 	End Rem
 	Method Call:TRESTResponse(url:String, headers:String[] = Null, requestMethod:String = "GET", userData:Object = Null)
 		Local response:TRESTResponse = New TRESTResponse
@@ -79,7 +116,16 @@ Type TRESTRequest
 			End Select
 		End If
 		
+		
 		Local headerList:TList = New TList
+		'Push any preset headers into the list
+		If Not Self._headers.IsEmpty()
+			For Local key:String = EachIn Self._headers.Keys()
+				Local value:String = String(Self._headers.ValueForKey(key))
+				headerList.AddLast(key + ": " + value)
+			Next
+		End If
+		
 		If headers <> Null
 			For Local str:String = EachIn headers
 				headerList.AddLast(str)
