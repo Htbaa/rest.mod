@@ -1,15 +1,16 @@
-'Code below taken from the public domain
-'http://www.blitzmax.com/codearcs/codearcs.php?code=1581
-'Original author is Perturbatio/Kris Kelly
-'Wrapped by Htbaa/Christiaan Kras to fit in the module
 Rem
-	bbdoc:
-	about:
+	bbdoc: URL Encode/Decode helper functions
+	about: These routines were taken from public domain<br>
+	at the <a href="http://www.blitzmax.com/codearcs/codearcs.php?code=1581">BlitzMax Code Archives</a>.<br>
+	The original author is Perturbatio/Kris Kelly but has been wrapped by me. 
 End Rem
 Type TURLFunc
 	Rem
-		bbdoc:
-		about:
+		bbdoc: URL Encode a string
+		returns: URL Encoded string
+		about: @value is what you want URL Encoded<br>
+		@EncodeUnreserved, when set to @True, will make sure everything will be encoded<br>
+		@UsePlusForSpace, when set to @True, will translate a space to @+, instead of @%20
 	End Rem
 	Function EncodeString:String(value:String, EncodeUnreserved:Int = False, UsePlusForSpace:Int = True)
 		Local ReservedChars:String = "!*'();:@&=+$,/?%#[]~r~n"
@@ -34,8 +35,9 @@ Type TURLFunc
 	End Function
 	
 	Rem
-		bbdoc:
-		about:
+		bbdoc: URL Decode a string
+		returns: URL Decoded string
+		about: @EncStr should be a URL Encoded string
 	End Rem
 	Function DecodeString:String(EncStr:String)
 		Local Pos:Int = 0
@@ -60,8 +62,9 @@ Type TURLFunc
 	End Function
 	
 	Rem
-		bbdoc:
-		about:
+		bbdoc: Translate a Hexadecimal to an Decimal
+		returns: Integer
+		about: @HexStr is your string with a Hexadecimal
 	End Rem
 	Function HexToInt:Int( HexStr:String )
 		If HexStr.Find("$") <> 0 Then HexStr = "$" + HexStr
@@ -69,8 +72,10 @@ Type TURLFunc
 	End Function
 	
 	Rem
-		bbdoc:
-		about:
+		bbdoc: Translate a Decimal to a Hexadecimal
+		Returns: String
+		about: @val is your decimal<br>
+		@chars is the amount of characters to represent the hexadecimal, for our uses always 2.
 	End Rem
 	Function IntToHexString:String(val:Int, chars:Int = 2)
 		Local Result:String = Hex(val)
@@ -79,7 +84,9 @@ Type TURLFunc
 
 	Rem
 		bbdoc: Create a query string from the given values
-		about: Expects an array with strings. Each entry should be something like var=value
+		returns: String
+		about: Expects an array with strings. Each entry should be something like var=value<br>
+		Every entry should already be URL Encoded!
 	End Rem
 	Function CreateQueryString:String(params:String[])
 		Local qs:String = "&".Join(params)

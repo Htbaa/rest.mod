@@ -1,5 +1,5 @@
 Rem
-	bbdoc:
+	bbdoc: A REST request object
 	about:
 End Rem
 Type TRESTRequest
@@ -9,10 +9,9 @@ Type TRESTRequest
 	Field _headers:TMap = New TMap
 	
 	Rem
-		bbdoc: Optionally set the path to a certification bundle to validate the SSL certificate of Rackspace
+		bbdoc: Optionally set the path to a certification bundle to validate the SSL certificate of the REST Server
 		about: If you want to validate the SSL certificate of the REST server you can set the path to your certificate bundle here.
-		This needs to be set BEFORE creating a TRESTRequest object
-		By default the included cecert.pem file is used
+		This needs to be set BEFORE creating a TRESTRequest object.
 	End Rem
 	Global CAInfo:String
 	
@@ -25,10 +24,10 @@ Type TRESTRequest
 		Self._progressData = progressObject
 	End Method
 	
-	Rem
-		bbdoc: Callback for cURL to catch headers
-		about: Private method
-	End Rem
+'	Rem
+'		bbdoc: Callback for cURL to catch headers
+'		about: Private method
+'	End Rem
 	Function HeaderCallback:Int(buffer:Byte Ptr, size:Int, data:Object)
 		Local str:String = String.FromCString(buffer)
 		
@@ -138,7 +137,6 @@ Type TRESTRequest
 		Next
 		
 		curl.httpHeader(headerArray)
-		
 		curl.setHeaderCallback(Self.HeaderCallback, response)
 		
 		Local res:Int = curl.perform()

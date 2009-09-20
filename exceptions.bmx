@@ -6,6 +6,7 @@ Type TRESTBaseException Abstract
 	
 	Rem
 		bbdoc: Sets message
+		returns: TRESTBaseException
 	End Rem
 	Method SetMessage:TRESTBaseException(message:String)
 		Self.message = message

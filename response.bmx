@@ -1,8 +1,11 @@
 Rem
-	bbdoc:
-	about:
+	bbdoc: A REST Response object
+	about: A TRESTResponse object is what will be returned by TRESTRequest.Call()
 End Rem
 Type TRESTResponse
+	Rem
+		bbdoc: Headers returned by REST server
+	End Rem
 	Field headers:TMap = New TMap
 	Rem
 		bbdoc: Content returned by REST server
