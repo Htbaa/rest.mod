@@ -1,14 +1,14 @@
 Rem
 	bbdoc: Exception for TREST
 End Rem
-Type TRESTBaseException Abstract
+Type TRESTException Abstract
 	Field message:String
 	
 	Rem
 		bbdoc: Sets message
-		returns: TRESTBaseException
+		returns: TRESTException
 	End Rem
-	Method SetMessage:TRESTBaseException(message:String)
+	Method SetMessage:TRESTException(message:String)
 		Self.message = message
 		Return Self
 	End Method
@@ -24,11 +24,11 @@ End Type
 Rem
 	bbdoc: Exception for TRESTRequest
 End Rem
-Type TRESTRequestException Extends TRESTBaseException
+Type TRESTRequestException Extends TRESTException
 End Type
 
 Rem
 	bbdoc: Exception for TRESTResponse
 End Rem
-Type TRESTResponseException Extends TRESTBaseException
+Type TRESTResponseException Extends TRESTException
 End Type
