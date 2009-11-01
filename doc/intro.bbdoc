@@ -16,4 +16,4 @@ Print "Some header returned from REST server is: " + response.GetHeader("secret-
 <p>Any header set with AddHeader() will be added to every request done by Call(). 
 Any headers added with Call() will only be used for that particular request. 
 So any headers set with AddHeader() are global for the TRESTRequest object, and those set with 
-Call() only effect the current request.</p>
+Call() only affect the current request.</p>
