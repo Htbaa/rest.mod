@@ -27,7 +27,7 @@ Rem
 EndRem
 Module htbaapub.rest
 ModuleInfo "Name: htbaapub.rest"
-ModuleInfo "Version: 1.01"
+ModuleInfo "Version: 1.02"
 ModuleInfo "License: MIT"
 ModuleInfo "Author: Christiaan Kras"
 ModuleInfo "Special thanks to: Bruce A Henderson, Kris Kelly"

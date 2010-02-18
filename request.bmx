@@ -25,6 +25,8 @@ Rem
 	about:
 End Rem
 Type TRESTRequest
+	Field _curlInitCallback(curl:TCurlEasy, userData:Object)
+	Field _curlInitData:Object
 	Field _progressCallback:Int(data:Object, dltotal:Double, dlnow:Double, ultotal:Double, ulnow:Double)
 	Field _progressData:Object
 	
@@ -44,6 +46,15 @@ Type TRESTRequest
 	Method SetProgressCallback(progressFunction:Int(data:Object, dltotal:Double, dlnow:Double, ultotal:Double, ulnow:Double), progressObject:Object = Null)
 		Self._progressCallback = progressFunction
 		Self._progressData = progressObject
+	End Method
+	
+	Rem
+		bbdoc: Set a Curl Init callback to change the behavior of Curl
+		about: The TCurlEasy object used by @Request() will be passed down to your callback function
+	End Rem
+	Method SetCurlInitCallback(curlInitCallback(curl:TCurlEasy, userData:Object), userData:Object = Null)
+		Self._curlInitCallback = curlInitCallback
+		Self._curlInitData = userData
 	End Method
 	
 '	Rem
@@ -160,6 +171,12 @@ Type TRESTRequest
 		
 		curl.httpHeader(headerArray)
 		curl.setHeaderCallback(Self.HeaderCallback, response)
+		
+		'Set curl init callback if set
+		If Self._curlInitCallback <> Null
+			Self._curlInitCallback(curl, Self._curlInitData)
+		End If
+		
 		
 		Local res:Int = curl.perform()
 
