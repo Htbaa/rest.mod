@@ -31,6 +31,7 @@ Type TRESTRequest
 	Field _progressData:Object
 	
 	Field _headers:TMap = New TMap
+	Field _stream:TStream
 	
 	Rem
 		bbdoc: Optionally set the path to a certification bundle to validate the SSL certificate of the REST Server
@@ -94,6 +95,15 @@ Type TRESTRequest
 	End Rem
 	Method RemoveHeaders()
 		Self._headers.Clear()
+	End Method
+	
+	Rem
+		bbdoc: Set stream to write content to
+		returns: Nothing
+		about: Setting a stream disables TRESTResponse.content. So to retrieve the content you need to read the stream.
+	End Rem
+	Method SetStream(stream:TStream)
+		Self._stream = stream
 	End Method
 	
 	Rem
@@ -177,6 +187,8 @@ Type TRESTRequest
 			Self._curlInitCallback(curl, Self._curlInitData)
 		End If
 		
+		If Self._stream Then curl.setWriteStream(Self._stream)
+		response.stream = Self._stream
 		
 		Local res:Int = curl.perform()
 
@@ -195,7 +207,7 @@ Type TRESTRequest
 		curl.freeLists()
 		curl.cleanup()
 		
-		response.content = curl.toString()
+		If Not Self._stream Then response.content = curl.ToString()
 
 		'Throw exception if an error with cURL occured
 		If errorMessage <> Null

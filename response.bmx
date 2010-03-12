@@ -34,6 +34,13 @@ Type TRESTResponse
 	End Rem
 	Field content:String
 	Rem
+		bbdoc: Content returned by REST server in a stream
+		about: If a stream has been passed to TRESTRequest
+		this field will point to the same stream. Note that
+		the @content field won't be set if a stream is being used.
+	End Rem
+	Field stream:TStream
+	Rem
 		bbdoc: HTTP Status code returned by REST server
 	End Rem
 	Field responseCode:Int
