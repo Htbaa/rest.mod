@@ -55,5 +55,66 @@ Type TRESTResponse
 	Method GetHeader:String(headerName:String, throwOnError:Byte = False)
 		If throwOnError And Not Self.headers.Contains(headerName) Then Throw New TRESTResponseException.SetMessage("Header " + headerName + " doesn't exist")
 		Return String(Self.headers.ValueForKey(headerName))
-	End Method	
+	End Method
+	
+	Rem
+		bbdoc: responseCode is in the 1xx range
+		returns: Byte
+		about:
+		Return True if responseCode is an Informational status code (1xx). This class of status code indicates a provisional response which can't have any content.
+	End Rem
+	Method IsInfo:Byte()
+		Return Self.responseCode >= 100 And Self.responseCode < 200
+	End Method
+	
+	Rem
+		bbdoc: responseCode is in the 2xx range
+		returns: Byte
+		about:
+		Return True if responseCode is a Successful status code (2xx).
+	End Rem
+	Method IsSuccess:Byte()
+		Return Self.responseCode >= 200 And Self.responseCode < 300
+	End Method
+	
+	Rem
+		bbdoc: responseCode is in the 3xx range
+		returns: Byte
+		about:
+		Return True if responseCode is a Redirection status code (3xx). This class of status code indicates that further action needs to be taken by the user agent in order to fulfill the request.
+	End Rem
+	Method IsRedirect:Byte()
+		Return Self.responseCode >= 300 And Self.responseCode < 400
+	End Method
+	
+	Rem
+		bbdoc: responseCode is in the 4xx or 5xx range
+		returns: Byte
+		about:
+		Return TRUE if responseCode is an Error status code (4xx or 5xx). The function return True for both client error or a server error status codes.
+	End Rem
+	Method IsError:Byte()
+		Return Self.responseCode >= 400 And Self.responseCode < 600
+	End Method
+	
+	Rem
+		bbdoc: responseCode is in the 4xx range
+		returns: Byte
+		about:
+		Return True if responseCode is an Client Error status code (4xx). This class of status code is intended for cases in which the client seems to have erred.
+	End Rem
+	Method IsClientError:Byte()
+		Return Self.responseCode >= 400 And Self.responseCode < 500
+	End Method
+	
+	Rem
+		bbdoc: responseCode is in the 5xx range
+		returns: Byte
+		about:
+		Return True if responseCode is an Server Error status code (5xx). This class of status codes is intended for cases in which the server is aware that it has erred or is incapable of performing the request.
+	End Rem
+	Method IsServerError:Byte()
+		Return Self.responseCode >= 500 And Self.responseCode < 600
+	End Method
+
 End Type

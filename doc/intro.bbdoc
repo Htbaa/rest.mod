@@ -10,6 +10,9 @@ Local headers:String[] = ["username: Htbaa"]
 Local response:TRESTResponse = request.Call("http://localhost/rest/account/new", headers, "PUT")
 Print "Returned HTTP Status code from REST server is: " + response.responseCode
 Print "Some header returned from REST server is: " + response.GetHeader("secret-message")
+If response.IsSuccess()
+	Print "Request was successful!"
+End If
 </pre>
 
 <h2>Difference between AddHeader() and adding headers through Call()</h2>
