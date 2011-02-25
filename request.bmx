@@ -210,7 +210,12 @@ Type TRESTRequest
 		If Not Self._stream Then response.content = curl.ToString()
 
 		'Throw exception if an error with cURL occured
-		If errorMessage <> Null
+		'But ignore CURLE_PARTIAL_FILE error in case of a HEAD request
+		'libcurl generates this error because HEAD requests contain no
+		'body, but as the purpose of HEAD requests is to only retrieve
+		'headers it shouldn't contain the body, but it should contain
+		'the Content-Length header
+		If errorMessage <> Null And (Not res = 18 And requestMethod = "HEAD")
 			Throw New TRESTRequestException.SetMessage(errorMessage)
 		End If
 		
