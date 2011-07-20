@@ -34,6 +34,13 @@ Type TRESTRequest
 	Field _stream:TStream
 	
 	Rem
+		bbdoc: Address to proxy server
+		about: If you require to use a proxy server for outgoing connections be sure to set this field.
+		Accepted format is [protocol://][user:password@]machine[:port]. See bah.libcurlssl for more information
+	End Rem
+	Field proxy:String
+	
+	Rem
 		bbdoc: Optionally set the path to a certification bundle to validate the SSL certificate of the REST Server
 		about: If you want to validate the SSL certificate of the REST server you can set the path to your certificate bundle here.
 		This needs to be set BEFORE creating a TRESTRequest object.
@@ -130,6 +137,8 @@ Type TRESTRequest
 		curl.setOptInt(CURLOPT_FOLLOWLOCATION, 1)
 		curl.setOptString(CURLOPT_CUSTOMREQUEST, requestMethod)
 		curl.setOptString(CURLOPT_URL, url)
+		
+		If Self.proxy Then curl.setOptString(CURLOPT_PROXY, Self.proxy)
 
 		'Set progress callback if set
 		If Self._progressCallback <> Null
