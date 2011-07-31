@@ -32,13 +32,7 @@ Type TRESTRequest
 	
 	Field _headers:TMap = New TMap
 	Field _stream:TStream
-	
-	Rem
-		bbdoc: Address to proxy server
-		about: If you require to use a proxy server for outgoing connections be sure to set this field.
-		Accepted format is [protocol://][user:password@]machine[:port]. See bah.libcurlssl for more information
-	End Rem
-	Field proxy:String
+	Field _proxy:String
 	
 	Rem
 		bbdoc: Optionally set the path to a certification bundle to validate the SSL certificate of the REST Server
@@ -63,6 +57,15 @@ Type TRESTRequest
 	Method SetCurlInitCallback(curlInitCallback(curl:TCurlEasy, userData:Object), userData:Object = Null)
 		Self._curlInitCallback = curlInitCallback
 		Self._curlInitData = userData
+	End Method
+	
+	Rem
+		bbdoc: Address to proxy server
+		about: If you require to use a proxy server for outgoing connections be sure to set this field.
+		Accepted format is [protocol://][user:password@]machine[:port]. See bah.libcurlssl for more information
+	End Rem
+	Method SetProxyServer(server:String)
+		Self._proxy = server
 	End Method
 	
 '	Rem
@@ -138,7 +141,7 @@ Type TRESTRequest
 		curl.setOptString(CURLOPT_CUSTOMREQUEST, requestMethod)
 		curl.setOptString(CURLOPT_URL, url)
 		
-		If Self.proxy Then curl.setOptString(CURLOPT_PROXY, Self.proxy)
+		If Self._proxy <> Null Then curl.setOptString(CURLOPT_PROXY, Self._proxy)
 
 		'Set progress callback if set
 		If Self._progressCallback <> Null
