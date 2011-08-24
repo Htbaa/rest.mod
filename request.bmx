@@ -170,28 +170,15 @@ Type TRESTRequest
 			End Select
 		End If
 		
-		
-		Local headerList:TList = New TList
-		'Push any preset headers into the list
+		'Push any preset headers into the array
 		If Not Self._headers.IsEmpty()
 			For Local key:String = EachIn Self._headers.Keys()
 				Local value:String = String(Self._headers.ValueForKey(key))
-				headerList.AddLast(key + ": " + value)
+				headers:+[key + ":" + value]
 			Next
 		End If
 		
-		If headers <> Null
-			For Local str:String = EachIn headers
-				headerList.AddLast(str)
-			Next
-		End If
-		
-		Local headerArray:String[] = New String[headerList.Count()]
-		For Local i:Int = 0 To headerArray.Length - 1
-			headerArray[i] = String(headerList.ValueAtIndex(i))
-		Next
-		
-		curl.httpHeader(headerArray)
+		curl.httpHeader(headers)
 		curl.setHeaderCallback(Self.HeaderCallback, response)
 		
 		'Set curl init callback if set

@@ -27,11 +27,13 @@ Rem
 EndRem
 Module htbaapub.rest
 ModuleInfo "Name: htbaapub.rest"
-ModuleInfo "Version: 1.08"
+ModuleInfo "Version: 1.09"
 ModuleInfo "License: MIT"
 ModuleInfo "Author: Christiaan Kras"
 ModuleInfo "Special thanks to: Bruce A Henderson, Kris Kelly"
 ModuleInfo "Git repository: <a href='http://github.com/Htbaa/rest.mod/'>http://github.com/Htbaa/rest.mod/</a>"
+ModuleInfo "History: 1.09"
+ModuleInfo "History: Made TRESTRequest.Call() more efficient when merging preset and per-request supplied headers"
 ModuleInfo "History: 1.08"
 ModuleInfo "History: Made TRESTRequest.proxy private (now _proxy). Use the SetProxyServer() method instead"
 ModuleInfo "History: 1.07"
